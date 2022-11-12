@@ -10,34 +10,32 @@ function App() {
 
   const updateCalc = (value) => {
 
-    if(
-      ops.includes(value) && calc === '' || 
+    if (
+      ops.includes(value) && calc === '' ||
       ops.includes(value) && ops.includes(calc.slice(-1))
-      ) {
-        return
-      }
+    ) {
+      return
+    }
 
     setCalc(calc + value)
 
-    if(!ops.includes(value)) {
+    if (!ops.includes(value)) {
       setResult(eval(calc + value).toString());
     }
   }
 
-  const  calculate = () => {
+  const calculate = () => {
     setCalc(eval(calc).toString());
   }
 
   const deleteLast = () => {
-    if(calc == '') {
+    if (calc == '') {
       return;
     }
     const value = calc.slice(0, -1);
 
     setCalc(value);
   }
-
-
 
 
   const createDigits = () => {
@@ -57,24 +55,33 @@ function App() {
 
   return (
     <div className="App">
+
+      <h1>WINDOWS CALCULATOR</h1>
+
       <div className='calculator'>
         <div className='display'>
           {result ? <span>({result})</span> : ''} {calc || '0'}
         </div>
-        <div className='operators'>
-          <button onClick={() => updateCalc('/')}>/</button>
-          <button onClick={() => updateCalc('*')}>*</button>
-          <button onClick={() => updateCalc('+')}>+</button>
-          <button onClick={() => updateCalc('-')}>-</button>
+        <div className='numpad'>
+          <div className="digits">
+            {createDigits()}
+            <button onClick={() => {
+              setCalc('');
+              setResult('');
+            }}>C</button>
+            <button onClick={() => updateCalc('0')}>0</button>
+            <button onClick={() => updateCalc('.')}>.</button>
+          </div>
+          <div className='operators'>
+            <button onClick={deleteLast}>DEL</button>
+            <button onClick={() => updateCalc('/')}>/</button>
+            <button onClick={() => updateCalc('*')}>*</button>
+            <button onClick={() => updateCalc('+')}>+</button>
+            <button onClick={() => updateCalc('-')}>-</button>
 
-          <button onClick={deleteLast}>DEL</button>
-        </div>
-        <div className="digits">
-          {createDigits()}
-          <button onClick={() => updateCalc('0')}>0</button>
-          <button onClick={() => updateCalc('.')}>.</button>
+            <button onClick={calculate} style={{background: '#14466d'}}>=</button>
+          </div>
 
-          <button onClick={calculate}>=</button>
         </div>
       </div>
     </div>
